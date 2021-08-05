@@ -1,11 +1,11 @@
 resource "aws_transfer_server" "transfer_server" {
   domain = var.domain
   protocols = var.protocols
-  # endpoint_details {
-  #   vpc_endpoint_id = aws_vpc_endpoint.transfer.id
-  #   address_allocation_ids = var.address_allocation_ids
-  #   subnet_ids = var.subnet_ids
-  # }
+  endpoint_details {
+    vpc_endpoint_id = aws_vpc_endpoint.transfer.id
+    address_allocation_ids = var.address_allocation_ids
+    subnet_ids = var.subnet_ids
+  }
   endpoint_type = var.endpoint_type
   identity_provider_type = var.identity_provider_type
   logging_role           = aws_iam_role.transfer_server_role.arn
@@ -15,11 +15,6 @@ resource "aws_transfer_server" "transfer_server" {
     NAME = var.transfer_server_name
   }
 }
-
-# resource "aws_vpc_endpoint" "transfer" {
-#   vpc_id = var.vpc_id
-#   service_name = var.service_name
-# }
 
 resource "aws_transfer_user" "transfer_server_user" {
   count = length(var.transfer_server_user_names)
